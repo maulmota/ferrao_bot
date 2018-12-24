@@ -15,9 +15,21 @@ var nossaMota = []string{
 	"Vira latismo over 9000",
 }
 
+var kwsTimCook = []string{
+	"Apple",
+	"apple",
+	"tim cook",
+	"Tim Cook",
+}
+
 var timCook = []string{
 	"Apple ta uma merda",
 	"Apple ta um lixo",
+}
+
+var kwsFakeNews = []string{
+	"http",
+	"https",
 }
 
 var fakeNews = []string{
@@ -31,13 +43,6 @@ var mentionFerrao = []string{
 	"fala",
 }
 
-var newAppleDevices = []string{
-	"Apple ta uma merda",
-	"Vou pegar no muambeiro",
-	"Ta valendo a pena",
-	"Comprei o novo e dei o antigo pro paulo",
-}
-
 var kwsNewAppleDevices = []string{
 	"iphone",
 	"iPhone",
@@ -45,20 +50,39 @@ var kwsNewAppleDevices = []string{
 	"macbook",
 }
 
+var newAppleDevices = []string{
+	"Apple ta uma merda",
+	"Vou pegar no muambeiro",
+	"Ta valendo a pena",
+	"Comprei o novo e dei o antigo pro paulo",
+}
+
 var replyImage = []string{
 	"kkkkkkkkkkkk",
 	"eHAOIUHEAOIHEAIUOHEAUEA",
 	"L O L",
 	"perdi mto forte",
-	"L O L",
+	"ehaiuoheaiuheiauhea",
 	"\U0001F602\U0001F602\U0001F602\U0001F602",
 	"Caralho",
 	"A O V I V O",
 }
 
+var kwsAmir = []string{
+	"amir",
+	"Amir",
+}
+
 var amir = []string{
 	"Ta muito caro la",
 	"Joao saiu de la, nao vale mais a pena",
+}
+
+var kwsOcupado = []string{
+	"outback",
+	"Outback",
+	"bora",
+	"Bora",
 }
 
 var ocupado = []string{
@@ -70,14 +94,74 @@ var ocupado = []string{
 	"vou avisar para a Natalia",
 }
 
+var kwsCanada = []string{
+	"Canada",
+	"canada",
+	"Canadá",
+	"canada",
+	"quebec",
+	"Quebec",
+}
+
+var canada = []string{
+	"Mota se achando o foda aí porque foi pro Canada",
+	"tu ja está no caminho sem volta nessa bosta de canada",
+	"lombo canadense é a unica coisa boa do canada",
+	"Enjoy Canada without friends, @maulmota",
+	"normie é ir pro canada cara, discurso de patricinha metida",
+	"foi mal se no canada é sempre domingo",
+}
+
+var kwsAndroid = []string{
+	"android",
+	"Android",
+	"samsung",
+	"Samsung",
+}
+
+var android = []string{
+	"outback",
+	"nao vou nem entrar nessa discussao",
+	"affe mano",
+	"ah nao mano",
+	"Google",
+	"google",
+}
+
+var kwsChrome = []string{
+	"Chrome",
+	"chrome",
+	"gmail",
+	"Gmail",
+}
+
+var chrome = []string{
+	"nao sei oq tu escuta ai no canada mas tu ta se achando para caralho vai tomar no cu",
+	"tu ta cego com sei la q merda teu coworker falou para vc",
+	"mota eh vira casaca",
+	"q lixo cara",
+}
+
+var kwsCo7 = []string{
+	"co7",
+	"Co7",
+	"Cossetti",
+	"cossetti",
+}
+
+var co7 = []string{
+	"Co7 é o pedreiro so faz serviço de carga",
+	"Botei ele para arrumar os armários do César",
+}
+
 func ferraoReply(text *string, keywords []string, possibleAnswers []string, probability int) bool {
 
 	match := false
 	rand.Seed(time.Now().UTC().UnixNano())
 	r := rand.Intn(100 - 0)
 
-	for _, keyword := range keywords{
-		if (strings.Contains(*text, keyword) && (r < probability))	{
+	for _, keyword := range keywords {
+		if strings.Contains(*text, keyword) && (r < probability) {
 			*text = possibleAnswers[rand.Intn(len(possibleAnswers))]
 			match = true
 			break
@@ -102,7 +186,6 @@ func main() {
 
 	updates, err := bot.GetUpdatesChan(u)
 
-
 	// To avoid dealing with old messages
 	time.Sleep(time.Millisecond * 5000)
 	updates.Clear()
@@ -117,43 +200,38 @@ func main() {
 		r := rand.Intn(100 - 0)
 
 		// Logging messages that arrived
-		log.Printf("[%s] %s \n", update.Message.From.UserName, update.Message.Text )
-
+		log.Printf("[%s] %s \n", update.Message.From.UserName, update.Message.Text)
 
 		var message string = ""
 
 		switch {
-
-		//case (strings.Contains(update.Message.Text, "macbook") || strings.Contains(update.Message.Text, "iphone")|| strings.Contains(update.Message.Text, "apple watch")) && (r < 80) && (update.Message.From.UserName != "viniciusferrao"):
-			//	message = newAppleDevices[rand.Intn(len(newAppleDevices))]
-
-
-			case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 100):
-				message = update.Message.Text
-
-			case (strings.Contains(update.Message.Text, "apple") && (r < 80) && (update.Message.From.UserName != "viniciusferrao")):
-				message = timCook[rand.Intn(len(timCook))]
-
-			case (strings.Contains(update.Message.Text, "https") || strings.Contains(update.Message.Text, "http")) && (r < 60) && (update.Message.From.UserName != "viniciusferrao"):
-				message = fakeNews[rand.Intn(len(fakeNews))]
-
-			case strings.Contains(update.Message.Text, "amir") && (r < 80) && (update.Message.From.UserName != "viniciusferrao"):
-				message = amir[rand.Intn(len(amir))]
-
-			case strings.Contains(update.Message.Text, "bora") && (r < 90) && (update.Message.From.UserName != "viniciusferrao"):
-				message = ocupado[rand.Intn(len(ocupado))]
-
-			case strings.Contains(update.Message.Text, "@viniciusferrao") && (r < 90) && (update.Message.From.UserName != "viniciusferrao"):
-				message = mentionFerrao[rand.Intn(len(mentionFerrao))]
-
-			case update.Message.Photo != nil && (r < 30) && (update.Message.From.UserName != "viniciusferrao"):
-				message = replyImage[rand.Intn(len(replyImage))]
-
-			case (update.Message.From.UserName == "maulmota") && (r < 5) && (update.Message.From.UserName != "viniciusferrao"):
-				message = nossaMota[rand.Intn(len(nossaMota))]
+		case ferraoReply(&update.Message.Text, kwsChrome, chrome, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsAndroid, android, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsTimCook, timCook, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsFakeNews, fakeNews, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsAmir, amir, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsOcupado, ocupado, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsCanada, canada, 80):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsCo7, co7, 80):
+			message = update.Message.Text
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && (r < 90) && (update.Message.From.UserName != "viniciusferrao"):
+			message = mentionFerrao[rand.Intn(len(mentionFerrao))]
+		case update.Message.Photo != nil && (r < 30) && (update.Message.From.UserName != "viniciusferrao"):
+			message = replyImage[rand.Intn(len(replyImage))]
+		case (update.Message.From.UserName == "maulmota") && (r < 5) && (update.Message.From.UserName != "viniciusferrao"):
+			message = nossaMota[rand.Intn(len(nossaMota))]
 		}
 
-		if message == ""{
+		if message == "" {
 			continue
 		}
 
