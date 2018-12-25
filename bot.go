@@ -9,6 +9,28 @@ import (
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
+var kwsTimMaia = []string{
+	"tim maia",
+	"Tim Maia",
+	"que delicia",
+	"que delícia",
+}
+
+var timMaiaAudio = []string{
+	"CQADAQADVAADMdEYRhqWi07QgrMIAg",
+	"CQADAQADIQADxYFoRo6kFYP0RxFaAg",
+}
+
+var felizNatal = []string{
+	"Feliz Páscoa",
+}
+
+var kwsFeliznatal = []string{
+	"feliz natal",
+	"Feliz Natal",
+	"Feliz natal",
+}
+
 var nossaMota = []string{
 	"Nossa Mota",
 	"Mota é muito invejoso",
@@ -79,10 +101,10 @@ var amir = []string{
 }
 
 var kwsOcupado = []string{
-	"outback",
-	"Outback",
 	"bora",
 	"Bora",
+	"Vamos lá",
+	"vamos la",
 }
 
 var ocupado = []string{
@@ -203,43 +225,66 @@ func main() {
 		log.Printf("[%s] %s \n", update.Message.From.UserName, update.Message.Text)
 
 		var message string = ""
+		audioId := ""
+		voiceId := ""
 
 		switch {
+		case ferraoReply(&update.Message.Text, kwsFeliznatal, felizNatal, 100):
+			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsChrome, chrome, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsAndroid, android, 80):
 			message = update.Message.Text
-		case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 80):
+		case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 70):
 			message = update.Message.Text
-		case ferraoReply(&update.Message.Text, kwsTimCook, timCook, 80):
+		case ferraoReply(&update.Message.Text, kwsTimCook, timCook, 70):
 			message = update.Message.Text
-		case ferraoReply(&update.Message.Text, kwsFakeNews, fakeNews, 80):
+		case ferraoReply(&update.Message.Text, kwsFakeNews, fakeNews, 25):
 			message = update.Message.Text
-		case ferraoReply(&update.Message.Text, kwsAmir, amir, 80):
+		case ferraoReply(&update.Message.Text, kwsAmir, amir, 70):
 			message = update.Message.Text
-		case ferraoReply(&update.Message.Text, kwsOcupado, ocupado, 80):
+		case ferraoReply(&update.Message.Text, kwsOcupado, ocupado, 70):
 			message = update.Message.Text
-		case ferraoReply(&update.Message.Text, kwsCanada, canada, 80):
+		case ferraoReply(&update.Message.Text, kwsCanada, canada, 70):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsCo7, co7, 80):
 			message = update.Message.Text
 		case strings.Contains(update.Message.Text, "@viniciusferrao") && (r < 90) && (update.Message.From.UserName != "viniciusferrao"):
 			message = mentionFerrao[rand.Intn(len(mentionFerrao))]
 		case update.Message.Photo != nil && (r < 30) && (update.Message.From.UserName != "viniciusferrao"):
-			message = replyImage[rand.Intn(len(replyImage))]
+			if r < 15 {
+				voiceId = "AwADAQADKwADRazwRNfpMzv6ESpHAg"
+			} else {
+				message = replyImage[rand.Intn(len(replyImage))]
+			}
 		case (update.Message.From.UserName == "maulmota") && (r < 5) && (update.Message.From.UserName != "viniciusferrao"):
 			message = nossaMota[rand.Intn(len(nossaMota))]
+		case update.Message.Sticker != nil:
+			if update.Message.Sticker.FileID == "CAADAQADjgADZ_LqCT89ryHtPlS0Ag" {
+				message = "Isso de ficar de RIP Ferrão já deu no saco, depois ficam de babaquice. E sim to puto"
+			}
+		case ferraoReply(&update.Message.Text, kwsTimMaia, timMaiaAudio, 100):
+			audioId = update.Message.Text // Geraldão
 		}
 
-		if message == "" {
+		if message == "" && audioId == "" && voiceId == "" {
 			continue
 		}
 
-		// send the message
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, message)
-		msg.ReplyToMessageID = update.Message.MessageID
-
-		time.Sleep(time.Millisecond * 5000)
-		bot.Send(msg)
+		switch {
+		case audioId != "":
+			audio := tgbotapi.NewAudioShare(update.Message.Chat.ID, audioId)
+			audio.ReplyToMessageID = update.Message.MessageID
+			bot.Send(audio)
+		case voiceId != "":
+			voice := tgbotapi.NewVoiceShare(update.Message.Chat.ID, voiceId)
+			voice.ReplyToMessageID = update.Message.MessageID
+			bot.Send(voice)
+		default:
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, message)
+			msg.ReplyToMessageID = update.Message.MessageID
+			time.Sleep(time.Millisecond * 3000)
+			bot.Send(msg)
+		}
 	}
 }
