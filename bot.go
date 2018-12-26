@@ -11,7 +11,6 @@ import (
 
 var kwsTimMaia = []string{
 	"tim maia",
-	"Tim Maia",
 	"que delicia",
 	"que delícia",
 }
@@ -27,8 +26,6 @@ var felizNatal = []string{
 
 var kwsFeliznatal = []string{
 	"feliz natal",
-	"Feliz Natal",
-	"Feliz natal",
 }
 
 var nossaMota = []string{
@@ -39,9 +36,7 @@ var nossaMota = []string{
 
 var kwsTimCook = []string{
 	"Apple",
-	"apple",
 	"tim cook",
-	"Tim Cook",
 }
 
 var timCook = []string{
@@ -66,10 +61,9 @@ var mentionFerrao = []string{
 }
 
 var kwsNewAppleDevices = []string{
-	"iphone",
 	"iPhone",
 	"MacBook",
-	"macbook",
+	"Apple Watch",
 }
 
 var newAppleDevices = []string{
@@ -91,7 +85,6 @@ var replyImage = []string{
 }
 
 var kwsAmir = []string{
-	"amir",
 	"Amir",
 }
 
@@ -101,7 +94,6 @@ var amir = []string{
 }
 
 var kwsOcupado = []string{
-	"bora",
 	"Bora",
 	"Vamos lá",
 	"vamos la",
@@ -118,10 +110,7 @@ var ocupado = []string{
 
 var kwsCanada = []string{
 	"Canada",
-	"canada",
 	"Canadá",
-	"canada",
-	"quebec",
 	"Quebec",
 }
 
@@ -135,25 +124,18 @@ var canada = []string{
 }
 
 var kwsAndroid = []string{
-	"android",
 	"Android",
-	"samsung",
 	"Samsung",
 }
 
 var android = []string{
-	"outback",
 	"nao vou nem entrar nessa discussao",
 	"affe mano",
 	"ah nao mano",
-	"Google",
-	"google",
 }
 
 var kwsChrome = []string{
 	"Chrome",
-	"chrome",
-	"gmail",
 	"Gmail",
 }
 
@@ -166,8 +148,6 @@ var chrome = []string{
 
 var kwsCo7 = []string{
 	"co7",
-	"Co7",
-	"Cossetti",
 	"cossetti",
 }
 
@@ -183,7 +163,7 @@ func ferraoReply(text *string, keywords []string, possibleAnswers []string, prob
 	r := rand.Intn(100 - 0)
 
 	for _, keyword := range keywords {
-		if strings.Contains(*text, keyword) && (r < probability) {
+		if strings.Contains(strings.ToLower(*text), strings.ToLower(keyword)) && (r < probability) {
 			*text = possibleAnswers[rand.Intn(len(possibleAnswers))]
 			match = true
 			break
