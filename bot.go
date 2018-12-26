@@ -176,6 +176,17 @@ var kwsSumido = []string{
 	"sumiu",
 }
 
+var kwsTomarNoCu = []string{
+	"me manda tomar no cu",
+	"tomar no cu",
+	"toma no cu",
+	"me xinga",
+}
+
+var voiceTomarNoCu = []string{
+	"AwADAQADUQADZW4gRd2fV8q-IinjAg",
+	"AwADAQADgQADpILYRjKn9boi0189Ag",
+}
 var randomPhotoId = []string{
 	"AgADAQADwqcxG9JRMUfjPcPDRQrOa20aAzAABMQi7nMGvR8iR3oAAgI",
 	"AgADAQADvacxG-s_IUf67VIkprcF5zck9y8ABGd47xxniCxx-6wAAgI",
@@ -257,8 +268,8 @@ func main() {
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsChrome, chrome, 80):
 			message = update.Message.Text
-		case strings.Contains(update.Message.Text, "@viniciusferrao") && strings.Contains(strings.ToLower(update.Message.Text), strings.ToLower("tomar no cu")) && (update.Message.From.ID == 390998014) && (r < 90):
-			voiceId = "AwADAQADgQADpILYRjKn9boi0189Ag"
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && ferraoReply(&update.Message.Text, kwsTomarNoCu, voiceTomarNoCu, 90) && (update.Message.From.ID == 390998014):
+			voiceId = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsAndroid, android, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 70):
