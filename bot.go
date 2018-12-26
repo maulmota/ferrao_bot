@@ -88,6 +88,18 @@ var kwsAmir = []string{
 	"Amir",
 }
 
+var kwsAmirPhoto = []string{
+	"kafta",
+	"shwarma",
+	"homus",
+	"joao",
+}
+
+var amirPhoto = []string{
+	"AgADAQAD5akxG-iEGUUdzJm7rz5FxXdlDDAABPRBJK8_scwxwDEDAAEC", // Amir
+	"AgADAQAD5qkxG-iEGUWKtUfvkuleKzx1DDAABO3chmZZ_T93FzYDAAEC", // Amir
+}
+
 var amir = []string{
 	"Ta muito caro la",
 	"Joao saiu de la, nao vale mais a pena",
@@ -156,6 +168,37 @@ var co7 = []string{
 	"Botei ele para arrumar os armários do César",
 }
 
+var kwsSumido = []string{
+	"sumido",
+	"ferrao morreu",
+	"rip ferrao",
+	"rip ferrão",
+	"sumiu",
+}
+
+var randomPhotoId = []string{
+	"AgADAQADwqcxG9JRMUfjPcPDRQrOa20aAzAABMQi7nMGvR8iR3oAAgI",
+	"AgADAQADvacxG-s_IUf67VIkprcF5zck9y8ABGd47xxniCxx-6wAAgI",
+	"AgADAQADt6cxGzo2cEc8iXrbS_cMhqUt9y8ABKkQmalKNUieGHAAAgI",
+	"AgADAQAD7acxG1Y4MEbuOeeF8bgnQmjpCjAABIOXWXaWtaVLoZUBAAEC",
+	"AgADAQAD46kxG-iEGUW9hIwYVMyy64FoAzAABHZhdnUaT5rcNTACAAEC",
+	"AgADAQADBqgxGxqbGEXmWBfSIBkuZCeuCjAABC0ovq3C-_tKwoUCAAEC",
+	"AgADAQAD5KkxG-iEGUWkSgd_XoEhexc2FDAABEKtMRz6sJWt-3wAAgI",
+	"AgADAQADB6gxGxqbGEUsmN6uJ66MtSFtDDAABC7YkzIas8W3xTkDAAEC",
+	"AgADAQADCKgxGxqbGEWxlnrf6STq3zC5CjAABBMLDhI5tXf6WnUCAAEC",
+	"AgADAQADCagxGxqbGEXV9XVf52bYblr6CjAABLY_hXcF4kvp-f8BAAEC",
+	"AgADAQADCqgxGxqbGEWzX82CRB0ekMN1DDAABP_oaz12olmzfjoDAAEC",
+	"AgADAQADC6gxGxqbGEXC2OJ0rDP2PyLtCjAABMR38Dvit2EwBBcCAAEC", // matsuda
+	"AgADAQADDKgxGxqbGEVTWYjfl_d9U7W3CjAABDcyKSHwgM06GHoCAAEC", // matsuda
+	"AgADAQADDagxGxqbGEW21D3-wkXZey0CCzAABDp9sX3ZHeOQDhkCAAEC",
+	"AgADAQADDqgxGxqbGEWjhiob0_va5Pt4DDAABFabgRs98CaNPjQDAAEC",
+	"AgADAQAD56kxG-iEGUXWW9P6PH3NEo95DDAABCUNEhMEM_1YUDMDAAEC",
+	"AgADAQADD6gxGxqbGEUb5ZY90we8dQnrCjAABIfw9PVPqV_EjRUCAAEC",
+	"AgADAQADEKgxGxqbGEVSdXk4jooFZQ00FDAABKp7oUi7NmHWaXoAAgI",
+	"AgADAQADEagxGxqbGEWW_S4E4-5O5bBlAzAABAnXSUSYyzXq_ysCAAEC",
+	"AgADAQADEqgxGxqbGEXbdwLtNWaGTuJrDDAABOcwq9xqG3RtXjgDAAEC",
+}
+
 func ferraoReply(text *string, keywords []string, possibleAnswers []string, probability int) bool {
 
 	match := false
@@ -207,12 +250,15 @@ func main() {
 		var message string = ""
 		audioId := ""
 		voiceId := ""
+		photoId := ""
 
 		switch {
-		case ferraoReply(&update.Message.Text, kwsFeliznatal, felizNatal, 100):
+		case ferraoReply(&update.Message.Text, kwsFeliznatal, felizNatal, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsChrome, chrome, 80):
 			message = update.Message.Text
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && strings.Contains(strings.ToLower(update.Message.Text), strings.ToLower("tomar no cu")) && (update.Message.From.ID == 390998014) && (r < 90):
+			voiceId = "AwADAQADgQADpILYRjKn9boi0189Ag"
 		case ferraoReply(&update.Message.Text, kwsAndroid, android, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 70):
@@ -229,6 +275,10 @@ func main() {
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsCo7, co7, 80):
 			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsSumido, randomPhotoId, 90):
+			photoId = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsAmirPhoto, amirPhoto, 90):
+			photoId = update.Message.Text
 		case strings.Contains(update.Message.Text, "@viniciusferrao") && (r < 90) && (update.Message.From.UserName != "viniciusferrao"):
 			message = mentionFerrao[rand.Intn(len(mentionFerrao))]
 		case update.Message.Photo != nil && (r < 30) && (update.Message.From.UserName != "viniciusferrao"):
@@ -247,9 +297,10 @@ func main() {
 			audioId = update.Message.Text // Geraldão
 		}
 
-		if message == "" && audioId == "" && voiceId == "" {
+		if message == "" && audioId == "" && voiceId == "" && photoId == "" {
 			continue
 		}
+		time.Sleep(time.Millisecond * 3000)
 
 		switch {
 		case audioId != "":
@@ -260,10 +311,12 @@ func main() {
 			voice := tgbotapi.NewVoiceShare(update.Message.Chat.ID, voiceId)
 			voice.ReplyToMessageID = update.Message.MessageID
 			bot.Send(voice)
+		case photoId != "":
+			photo := tgbotapi.NewPhotoShare(update.Message.Chat.ID, photoId)
+			bot.Send(photo)
 		default:
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, message)
 			msg.ReplyToMessageID = update.Message.MessageID
-			time.Sleep(time.Millisecond * 3000)
 			bot.Send(msg)
 		}
 	}
