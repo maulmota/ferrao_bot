@@ -11,7 +11,7 @@ The project is modular enough so with little effort is possible to adjust it to 
 Use the package manager to install ferrao_bot.
 
 ```bash
-go get codehosting.com/path/to/package
+go get github.com/maulmota/ferrao_bot
 ```
 
 Change it to the appropriate bot token in the main function.
