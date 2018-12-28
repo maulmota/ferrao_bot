@@ -55,6 +55,32 @@ var fakeNews = []string{
 	"fake news",
 }
 
+var kwsFatoOuFake = []string{
+	"é fake",
+	"eh fake",
+	"fato ou fake",
+	"é verdade",
+	"eh verdade",
+	"fake news",
+}
+
+var fatoOuFake = []string{
+	"Muito bom, mas provavelmente fake",
+	"Só pode ser sacanagem",
+	"Se fosse fake news eu saberia",
+	"falaram q eh fake",
+	"Claramente Fake",
+	"Sim é fake.",
+	"Mais fake news impossível",
+	"pior q não é feique",
+	"Feique",
+	"NAO TEM MAIS FEIQUE DO BOLARO",
+	"Fake the Faking Fakers.",
+	"Na real esse fake news poderia ser real",
+	"não é fake",
+	"Não entendi absolutamente porra nenhuma. Não sei se é fake ou real.",
+	"Não sei se é real ou não",
+}
 var mentionFerrao = []string{
 	"oi",
 	"fala",
@@ -264,6 +290,8 @@ func main() {
 		photoId := ""
 
 		switch {
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && ferraoReply(&update.Message.Text, kwsFatoOuFake, fatoOuFake, 90):
+			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsFeliznatal, felizNatal, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsChrome, chrome, 80):
