@@ -9,6 +9,11 @@ import (
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
+type videonote struct {
+	fileId   string
+	duration int
+}
+
 var kwsTimMaia = []string{
 	"tim maia",
 	"que delicia",
@@ -32,6 +37,16 @@ var nossaMota = []string{
 	"Nossa Mota",
 	"Mota é muito invejoso",
 	"Vira latismo over 9000",
+}
+
+var voiceCanadaNossaMota = []string{
+	"AwADAQADCwAD0lE5R4-K8R6LN3zPAg",
+	"AwADAQADJgAD5b2JRS6uR4M1Es73Ag",
+	"AwADAQADGQADLRu5RVkzYdXBrtkRAg",
+}
+
+var voiceHugo = []string{
+	"AwADAQADIgADojd5RhYfwFxbaOYCAg",
 }
 
 var kwsTimCook = []string{
@@ -84,6 +99,13 @@ var fatoOuFake = []string{
 var mentionFerrao = []string{
 	"oi",
 	"fala",
+}
+
+var videoMentionFerrao = []videonote{
+	videonote{
+		fileId:   "DQADAQADOgADWuihRvpcibjr3LhHAg",
+		duration: 6,
+	},
 }
 
 var kwsNewAppleDevices = []string{
@@ -161,6 +183,14 @@ var canada = []string{
 	"foi mal se no canada é sempre domingo",
 }
 
+var voiceLol = []string{
+	"AwADAQADLAADnLEwRfUP3N9QawoSAg",
+	"AwADAQADLgADnLEwRTSrLDQWhre-Ag",
+	"AwADAQADNQADnLEwRYfiKgua6PnsAg",
+	"AwADAQADQgADGBS5RYa21YUzsybTAg",
+	"AwADAQADKwADRazwRNfpMzv6ESpHAg",
+}
+
 var kwsAndroid = []string{
 	"Android",
 	"Samsung",
@@ -213,6 +243,24 @@ var voiceTomarNoCu = []string{
 	"AwADAQADUQADZW4gRd2fV8q-IinjAg",
 	"AwADAQADgQADpILYRjKn9boi0189Ag",
 }
+
+var macacoVideo = []videonote{
+	videonote{
+		fileId:   "DQADAQADbwADn0BIRsIBf-nusV6kAg",
+		duration: 10,
+	},
+}
+
+var kwsMacacoVideo = []string{
+	"macaco",
+	"gorila",
+	"preto",
+	"chipanze",
+	"crioulo",
+	"criolo",
+	"harambe",
+}
+
 var randomPhotoId = []string{
 	"AgADAQADwqcxG9JRMUfjPcPDRQrOa20aAzAABMQi7nMGvR8iR3oAAgI",
 	"AgADAQADvacxG-s_IUf67VIkprcF5zck9y8ABGd47xxniCxx-6wAAgI",
@@ -288,6 +336,7 @@ func main() {
 		audioId := ""
 		voiceId := ""
 		photoId := ""
+		videoId := videonote{fileId: "", duration: 0}
 
 		switch {
 		case strings.Contains(update.Message.Text, "@viniciusferrao") && ferraoReply(&update.Message.Text, kwsFatoOuFake, fatoOuFake, 90):
@@ -298,6 +347,10 @@ func main() {
 			message = update.Message.Text
 		case strings.Contains(update.Message.Text, "@viniciusferrao") && ferraoReply(&update.Message.Text, kwsTomarNoCu, voiceTomarNoCu, 90) && (update.Message.From.ID == 390998014):
 			voiceId = update.Message.Text
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && (update.Message.From.ID == 444973217):
+			voiceId = "AwADAQADHQADdVsoRd3xzhPNeufBAg" // Porra Erick
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && r < 5 && (update.Message.From.UserName == "hsantanna88"):
+			voiceId = voiceHugo[rand.Intn(len(voiceHugo))]
 		case ferraoReply(&update.Message.Text, kwsAndroid, android, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 70):
@@ -311,18 +364,30 @@ func main() {
 		case ferraoReply(&update.Message.Text, kwsOcupado, ocupado, 70):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsCanada, canada, 70):
-			message = update.Message.Text
+			if r > 50 {
+				message = update.Message.Text
+			} else {
+				voiceId = voiceCanadaNossaMota[rand.Intn(len(voiceCanadaNossaMota))]
+			}
 		case ferraoReply(&update.Message.Text, kwsCo7, co7, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsSumido, randomPhotoId, 90):
 			photoId = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsAmirPhoto, amirPhoto, 90):
 			photoId = update.Message.Text
+		case strings.Contains(update.Message.Text, "macaco") && (r < 90):
+			videoId.fileId = macacoVideo[rand.Intn(len(macacoVideo))].fileId
+			videoId.duration = macacoVideo[rand.Intn(len(macacoVideo))].duration
 		case strings.Contains(update.Message.Text, "@viniciusferrao") && (r < 90) && (update.Message.From.UserName != "viniciusferrao"):
-			message = mentionFerrao[rand.Intn(len(mentionFerrao))]
-		case update.Message.Photo != nil && (r < 30) && (update.Message.From.UserName != "viniciusferrao"):
-			if r < 15 {
-				voiceId = "AwADAQADKwADRazwRNfpMzv6ESpHAg"
+			if r < 35 {
+				videoId.fileId = videoMentionFerrao[rand.Intn(len(videoMentionFerrao))].fileId
+				videoId.duration = videoMentionFerrao[rand.Intn(len(videoMentionFerrao))].duration
+			} else {
+				message = mentionFerrao[rand.Intn(len(mentionFerrao))]
+			}
+		case update.Message.Photo != nil && (r < 40) && (update.Message.From.UserName != "viniciusferrao"):
+			if r < 20 {
+				voiceId = voiceLol[rand.Intn(len(voiceLol))]
 			} else {
 				message = replyImage[rand.Intn(len(replyImage))]
 			}
@@ -336,7 +401,7 @@ func main() {
 			audioId = update.Message.Text // Geraldão
 		}
 
-		if message == "" && audioId == "" && voiceId == "" && photoId == "" {
+		if message == "" && audioId == "" && voiceId == "" && photoId == "" && videoId.fileId == "" {
 			continue
 		}
 		time.Sleep(time.Millisecond * 3000)
@@ -353,6 +418,9 @@ func main() {
 		case photoId != "":
 			photo := tgbotapi.NewPhotoShare(update.Message.Chat.ID, photoId)
 			bot.Send(photo)
+		case videoId.fileId != "" && videoId.duration != 0:
+			video := tgbotapi.NewVideoNoteShare(update.Message.Chat.ID, videoId.duration, videoId.fileId)
+			bot.Send(video)
 		default:
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, message)
 			msg.ReplyToMessageID = update.Message.MessageID
