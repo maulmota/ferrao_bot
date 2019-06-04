@@ -111,7 +111,6 @@ var videoMentionFerrao = []videonote{
 var kwsLetsPlay = []string{
 	"vamos jogar",
 	"vai jogar",
-	"jogar",
 	"d3",
 }
 
