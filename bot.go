@@ -5,8 +5,6 @@ import (
 	"math/rand"
 	"strings"
 	"time"
-
-	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 type videonote struct {
@@ -34,6 +32,7 @@ var kwsFeliznatal = []string{
 }
 
 var nossaMota = []string{
+	"eu tenho q concordar o mota",
 	"Nossa Mota",
 	"Mota é muito invejoso",
 	"Vira latismo over 9000",
@@ -108,10 +107,31 @@ var videoMentionFerrao = []videonote{
 	},
 }
 
+var kwsLetsPlay = []string{
+	"vamos jogar",
+	"vai jogar",
+	"jogar",
+	"d3",
+}
+
+var LetsPlay = []string{
+	"vou tomar banho",
+	"Tão jogando?",
+	"to ligando o DESQUETOPE",
+	"daqui a pouco vou ter que ir jantar e ai miou",
+	"to la",
+	"ta baixando o patch",
+	"vou entrar",
+	"who mais gonna play",
+}
+
 var kwsNewAppleDevices = []string{
 	"iPhone",
 	"MacBook",
 	"Apple Watch",
+	"Mac Pro",
+	"fagOS",
+	"macos",
 }
 
 var newAppleDevices = []string{
@@ -119,6 +139,8 @@ var newAppleDevices = []string{
 	"Vou pegar no muambeiro",
 	"Ta valendo a pena",
 	"Comprei o novo e dei o antigo pro paulo",
+	"a apple deu rollback",
+	"RALADOR DE QUEIJO",
 }
 
 var replyImage = []string{
@@ -354,6 +376,8 @@ func main() {
 		case ferraoReply(&update.Message.Text, kwsAndroid, android, 80):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsNewAppleDevices, newAppleDevices, 70):
+			message = update.Message.Text
+		case ferraoReply(&update.Message.Text, kwsLetsPlay, LetsPlay, 90):
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsTimCook, timCook, 70):
 			message = update.Message.Text
