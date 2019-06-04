@@ -242,6 +242,7 @@ var kwsTomarNoCu = []string{
 var voiceTomarNoCu = []string{
 	"AwADAQADUQADZW4gRd2fV8q-IinjAg",
 	"AwADAQADgQADpILYRjKn9boi0189Ag",
+	"AwADAQADYQADgMzIRRNI_JOwIk6aAg",
 }
 
 var macacoVideo = []videonote{
