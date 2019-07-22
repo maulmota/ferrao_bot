@@ -49,6 +49,10 @@ var voiceHugo = []string{
 	"AwADAQADIgADojd5RhYfwFxbaOYCAg",
 }
 
+var voiceVagabundaDaPrincesaIsabel = []string{
+	"AwADAQADdQADWeWgRd5fViYP5zJpAg",
+}
+
 var kwsTimCook = []string{
 	"Apple",
 	"tim cook",
@@ -267,6 +271,14 @@ var voiceTomarNoCu = []string{
 	"AwADAQADYQADgMzIRRNI_JOwIk6aAg",
 }
 
+var kwsAhAntonioNaMoral = []string{
+	"ah antonio na moral",
+}
+
+var AhAntonioNaMoral = []string{
+	"AwADAQADgQADpILYRjKn9boi0189Ag",
+}
+
 var macacoVideo = []videonote{
 	videonote{
 		fileId:   "DQADAQADbwADn0BIRsIBf-nusV6kAg",
@@ -366,9 +378,13 @@ func main() {
 			message = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsFeliznatal, felizNatal, 80):
 			message = update.Message.Text
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && strings.Contains(update.Message.Text, "onde"):
+			voiceId = voiceVagabundaDaPrincesaIsabel[rand.Intn(len(voiceVagabundaDaPrincesaIsabel))]
+		case ferraoReply(&update.Message.Text, kwsAhAntonioNaMoral, AhAntonioNaMoral, 90):
+			voiceId = update.Message.Text
 		case ferraoReply(&update.Message.Text, kwsChrome, chrome, 80):
 			message = update.Message.Text
-		case strings.Contains(update.Message.Text, "@viniciusferrao") && ferraoReply(&update.Message.Text, kwsTomarNoCu, voiceTomarNoCu, 90) && (update.Message.From.ID == 390998014):
+		case strings.Contains(update.Message.Text, "@viniciusferrao") && strings.Contains(update.Message.Text, "antonio") && ferraoReply(&update.Message.Text, kwsTomarNoCu, voiceTomarNoCu, 90):
 			voiceId = update.Message.Text
 		case strings.Contains(update.Message.Text, "@viniciusferrao") && (update.Message.From.ID == 444973217):
 			voiceId = "AwADAQADHQADdVsoRd3xzhPNeufBAg" // Porra Erick
@@ -410,7 +426,7 @@ func main() {
 			} else {
 				message = mentionFerrao[rand.Intn(len(mentionFerrao))]
 			}
-		case update.Message.Photo != nil && (r < 40) && (update.Message.From.UserName != "viniciusferrao"):
+		case update.Message.Photo != nil && (r < 2) && (update.Message.From.UserName != "viniciusferrao"):
 			if r < 20 {
 				voiceId = voiceLol[rand.Intn(len(voiceLol))]
 			} else {
